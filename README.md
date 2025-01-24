@@ -2,8 +2,6 @@
 
 this is a basic operating system :)
 
-
-
 ## project structure
 
 ```
