@@ -4,6 +4,7 @@
 %include "gdt.asm"
 %include "idt.asm"
 %include "disk.asm"
+%include "utils.asm"
 
 start:
     cli
@@ -16,7 +17,6 @@ start:
     call setup_gdt
     call setup_idt
 
-    ; protected mode
     mov eax, cr0
     or eax, 1
     mov cr0, eax
@@ -33,6 +33,10 @@ init_pm:
     mov ss, ax
 
     call load_kernel
+
+    call clear_bss
+    call setup_paging
+
     jmp KERNEL_SEG:0x1000
 
 times 510 - ($ - $$) db 0

@@ -1,17 +1,14 @@
 BOOTLOADER_DIR := bootloader
-SRC_DIR := src
+KERNEL_DIR := kernel
 BUILD_DIR := build
 
-# src
 BOOTLOADER_SRC := $(wildcard $(BOOTLOADER_DIR)/*.asm)
-KERNEL_SRC := $(wildcard $(SRC_DIR)/*.rs)
+KERNEL_SRC := $(wildcard $(KERNEL_DIR)/**/*.rs)
 
-# .bin
 BOOTLOADER_BIN := $(BUILD_DIR)/bootloader.bin
 KERNEL_BIN := $(BUILD_DIR)/kernel.bin
 OS_IMAGE := $(BUILD_DIR)/os-image.bin
 
-# flag
 ASM_COMPILER := nasm
 ASM_FLAGS := -f bin
 RUST_COMPILER := rustc
@@ -23,18 +20,15 @@ all: $(OS_IMAGE)
 $(BOOTLOADER_BIN): $(BOOTLOADER_SRC) | $(BUILD_DIR)
     $(ASM_COMPILER) $(ASM_FLAGS) -o $@ $(BOOTLOADER_DIR)/boot.asm
 
-# compila kernel
 $(KERNEL_BIN): $(KERNEL_SRC) $(LD_SCRIPT) | $(BUILD_DIR)
-    $(RUST_COMPILER) $(RUST_FLAGS) --crate-type=staticlib --emit=obj $(SRC_DIR)/main.rs -o $@ -C link-args="-T$(LD_SCRIPT)"
+    $(RUST_COMPILER) $(RUST_FLAGS) --crate-type=staticlib --emit=obj $(KERNEL_DIR)/main.rs -o $@ -C link-args="-T$(LD_SCRIPT)"
 
-# combina il bootloader e il kernel in un'unica immagine del disco
 $(OS_IMAGE): $(BOOTLOADER_BIN) $(KERNEL_BIN) | $(BUILD_DIR)
     cat $^ > $@
 
 $(BUILD_DIR):
     mkdir -p $@
 
-# avvia l'os in qemu
 run: $(OS_IMAGE)
     qemu-system-x86_64 -drive format=raw,file=$(OS_IMAGE)
 
