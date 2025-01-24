@@ -2,8 +2,6 @@
 
 this is a basic operating system :)
 
-
-
 ## project structure
 
 ```
@@ -43,7 +41,7 @@ make
 
 3) run the os in qemu:
 ```
-make
+make run
 ```
 
 ## to-do
