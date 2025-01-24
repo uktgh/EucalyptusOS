@@ -41,7 +41,7 @@ make
 
 3) run the os in qemu:
 ```
-make
+make run
 ```
 
 ## to-do
