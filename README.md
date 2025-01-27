@@ -37,9 +37,16 @@ cd EucalyptusOS
 
 build  ->  make
 run    ->  make run
-debug  ->  make debug
 ```
+- system boots showing a message
+- any key pressed is displayed on screen
+- press esc to shutdown the system
 
+## development notes
+- system operates in 16 bit mode
+- uses bios interrupts for i/o
+- video memory mapped at 0xB8000
+- stack initialized at 0x7C00
 
 ## current status 
 this is a basic educational project in active development. it currently provides a minimal bootable environment with basic i/o capabilities.
