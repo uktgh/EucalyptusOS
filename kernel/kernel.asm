@@ -1,32 +1,40 @@
-[BITS 16]
+[BITS 32]
+extern clear_screen
+extern print_string
+extern init_protected_mode
+extern init_interrupts
+extern init_memory
+extern init_fs
+extern start_shell
 
+global kernel_start
+
+section .text
 kernel_start:
-    mov si, msg
+    ; init core
+    call init_protected_mode
+    call init_interrupts
+    call init_memory
+    call init_fs
+    
+    call clear_screen
+    
+    ; logo
+    push logo
     call print_string
-
-main_loop:
-    mov ah, 0x00
-    int 0x16
+    add esp, 4
     
-    cmp al, 0x1B
-    je shutdown
-    
-    mov ah, 0x0E
-    int 0x10
-    
-    jmp main_loop
-
-shutdown:
-    mov ax, 0x5307
-    mov bx, 0x0001
-    mov cx, 0x0003
-    int 0x15
+    call start_shell
     
     cli
     hlt
 
-%include "kernel/video.asm"
-%include "kernel/keyboard.asm"
-%include "kernel/utils.asm"
-
-msg db 'EucalyptusOS v0.0.7', 13, 10, 0
+section .data
+logo:   db "  ____                  __          __           ____  _____ ", 13, 10
+        db " / __/_ _____  ___ ____/ /_ _____ _/ /_ _ ___  / __ \/ ___/", 13, 10
+        db "/ _// // / _ \/ _ `/ _  / // / _ `/  ' \ / _ \/ /_/ /\__ \ ", 13, 10
+        db "/___/\_,_/_//_/\_,_/\_,_/\_,_/\_,_/_/_/_/ \___/\____/____/ ", 13, 10
+        db 13, 10
+        db "Version 0.1.0", 13, 10
+        db "Copyright (c) 2025 EucalyptusOS Team", 13, 10
+        db 13, 10, 0

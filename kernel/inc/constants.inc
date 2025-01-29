@@ -1,0 +1,9 @@
+%define KERNEL_OFFSET 0x1000
+%define STACK_OFFSET 0x90000
+%define SECTOR_SIZE 512
+%define MAX_COMMAND_LENGTH 256
+%define VIDEO_MEMORY 0xB8000
+%define ROWS 25
+%define COLS 80
+%define WHITE_ON_BLACK 0x0F
+
