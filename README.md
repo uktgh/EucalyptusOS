@@ -30,7 +30,7 @@
 ```
 
 ## prerequisites
-- nasm >0 2.15
+- nasm >= 2.15
 - gnu make >= 4.3
 - qemu >= 6.2 (testing)
 - gcc >= 9.4 (tools) 
