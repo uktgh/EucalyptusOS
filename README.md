@@ -29,6 +29,12 @@
 └── 📑 makefile
 ```
 
+## prerequisites
+- nasm >0 2.15
+- gnu make >= 4.3
+- qemu >= 6.2 (testing)
+- gcc >= 9.4 (tools) 
+
 ## features
 - [x] basic boot in 16 bit real mode
 - [x] basic video output (character printing)
@@ -52,7 +58,9 @@ git clone https://github.com/uktgh/EucalyptusOS.git
 cd EucalyptusOS
 
 
-clean  ->  make clean
-build  ->  make
-run    ->  make run
+clean  ─  make clean
+build  ─  make
+
+run    ─  make run
+       └ qemu-system-i386 -drive format=raw,file=build/imgs/os.img
 ```
