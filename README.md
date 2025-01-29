@@ -2,15 +2,31 @@
 
 ## project structure
 ```
-EucalyptusOS/
-├── boot/
-│   └── boot.asm
-├── kernel/
-│   ├── kernel.asm
-│   ├── video.asm
-│   ├── keyboard.asm
-│   └── utils.asm
-└── makefile
+📁 EucalyptusOS/
+├── 📁 boot/
+│   └── 📄 boot.asm
+├── 📁 kernel/
+│   ├── 📁 core/
+│   │   ├── 📄 interrupts.asm
+│   │   ├── 📄 memory.asm
+│   │   └── 📄 protected_mode.asm
+│   ├── 📁 drivers
+│   │   ├── 📄 disk.asm
+│   │   ├── 📄 keyboard.asm
+│   │   └── 📄 video.asm
+│   ├── 📁 fs
+│   │   └── 📄 filesystem.asm
+│   ├── 📁 inc
+│   │   ├── 📄 constants.inc
+│   │   ├── 📄 fs_constants.inc
+│   │   └── 📄 macros.inc
+│   ├── 📁 shell
+│   │   ├── 📄 commands.asm
+│   │   └── 📄 shell.asm
+│   └── 📄 kernel.asm
+├── 📁 linker/
+│   └── 📄 kernel.ld
+└── 📑 makefile
 ```
 
 ## features
@@ -20,14 +36,14 @@ EucalyptusOS/
 - [x] main kernel loop
 - [x] character echo
 - [x] shutdown command (esc)
-- [ ] switch to 32 bit protected mode
-- [ ] memory management
-- [ ] basic file system
-- [ ] interactive shell
-- [ ] multiple commands 
-- [ ] interrupt handling
+- [x] switch to 32 bit protected mode
+- [x] memory management
+- [x] basic file system
+- [x] interactive shell
+- [x] multiple commands 
+- [x] interrupt handling
+- [x] disk driver
 - [ ] system timer
-- [ ] disk driver
 - [ ] basic multitasking 
 
 ## setup & usage
@@ -35,18 +51,8 @@ EucalyptusOS/
 git clone https://github.com/uktgh/EucalyptusOS.git
 cd EucalyptusOS
 
+
+clean  ->  make clean
 build  ->  make
 run    ->  make run
 ```
-- system boots showing a message
-- any key pressed is displayed on screen
-- press esc to shutdown the system
-
-## development notes
-- system operates in 16 bit mode
-- uses bios interrupts for i/o
-- video memory mapped at 0xB8000
-- stack initialized at 0x7C00
-
-## current status 
-this is a basic educational project in active development. it currently provides a minimal bootable environment with basic i/o capabilities.
